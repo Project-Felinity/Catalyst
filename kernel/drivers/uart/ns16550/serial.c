@@ -17,7 +17,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 */
 
 #include "serial.h"
-#include "isa/x86_64/cpu.h"
+#include "isa/x86_64/lp_control/cpu.h"
 
 #include <stdbool.h>
 #include <stddef.h>

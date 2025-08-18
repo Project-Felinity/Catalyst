@@ -16,16 +16,15 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see https://www.gnu.org/licenses/
 */
 
-#include <lib/prelude/prelude.h>
-
 /*freestanding headers*/
 #include <stddef.h>
 #include <stdint.h>
 
 #include "boot/requests.h"
 #include "init/init.h"
-#include "isa/api.h"
+#include "isa/ifce.h"
 #include "isa/x86_64/cpuid/cpuid.h"
+#include "log/printf.h"
 
 static const char license_string[] =
     "Catalyst: A General Purpose OS Kernel\r\n\r\n"
@@ -80,7 +79,7 @@ extern void main(void)
         break;
     }
 
-    printf("Checking Limine HHDM request for response");
+    printf("Checking Limine HHDM request for response...");
     if (hhdm_request.response == nullptr) {
         printf("Higher Half Direct Map not available");
     } else {
@@ -94,5 +93,5 @@ extern void main(void)
 
     // We're done, just hang...
     printf("Initialization complete, waiting for interrupts...");
-    isa_hcf();
+    isa_halt();
 }

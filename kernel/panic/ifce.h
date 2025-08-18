@@ -1,5 +1,5 @@
-#ifndef PANIC_API_H
-#define PANIC_API_H
+#ifndef PANIC_IFCE_H
+#define PANIC_IFCE_H
 
 void panic(void);
 void assert([[maybe_unused]] const bool expr);

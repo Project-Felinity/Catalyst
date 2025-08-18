@@ -75,7 +75,8 @@ override CPPFLAGS := \
 ifeq ($(ARCH),x86_64)
     # Internal nasm flags that should not be changed by the user.
     override NASMFLAGS += \
-        -Wall
+        -Wall \
+        -f elf64
 endif
 
 # Architecture specific internal flags.
@@ -91,7 +92,8 @@ ifeq ($(ARCH),x86_64)
         -mno-mmx \
         -mno-sse \
         -mno-sse2 \
-        -mno-red-zone
+        -mno-red-zone \
+        -masm=intel # use Intel syntax
     override LDFLAGS += \
         -m elf_x86_64
     override NASMFLAGS += \

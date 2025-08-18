@@ -18,7 +18,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 
 #ifdef __x86_64__
 
-#include "isa/api.h"
+#include "isa/ifce.h"
 
 #include "drivers/uart/ns16550/serial.h"
 #include "isa/x86_64/init/gdt.h"
@@ -38,16 +38,16 @@ static uint8_t BSP_STACK[4096];
 static idt_t BSP_IDT;
 
 /*CPU*/
-inline void isa_disable_interrupts(void)
+inline void isa_mask_ints(void)
 {
     disable_interrupts();
 }
-inline void isa_enable_interrupts(void)
+inline void isa_unmask_ints(void)
 {
     enable_interrupts();
 }
 [[noreturn]]
-void isa_hcf(void)
+void isa_halt(void)
 {
     hcf();
 }
@@ -60,11 +60,11 @@ void isa_init_bsp(void)
 }
 
 /*Port I/O*/
-inline uint8_t isa_port_in(const uint16_t port)
+inline uint8_t isa_port_in8(const uint16_t port)
 {
     return inb(port);
 }
-inline void isa_port_out(const uint16_t port, const uint8_t data)
+inline void isa_port_out8(const uint16_t port, const uint8_t data)
 {
     outb(port, data);
 }

@@ -27,32 +27,32 @@ Disables all maskable interrupts
 Preconditions: None
 Postconditions: All maskable interrupts are disabled on the calling logical processor
 */
-inline void isa_disable_interrupts(void);
+inline void isa_mask_ints(void);
 /*
 Enables all maskable interrupts
 Preconditions: None
 Postconditions: All maskable interrupts are enabled on the calling logical processor
 */
-inline void isa_enable_interrupts(void);
+inline void isa_unmask_ints(void);
 /*
-Initializes a logical processor.
+Perform ISA specific initialization on the bootstrap LP
 Preconditions: None
 Postconditions: The processor will be initialized and ready to execute both kernel
 and userspace code
 */
 void isa_init_bsp(void);
 /*
-Halt (and catch fire)
+Halt the executing logical processor
 Preconditions: None
 Postconditions: The logical processor is halted until an interrupt occurs
 Note: This function never returns
 */
 [[noreturn]]
-void isa_hcf(void);
+void isa_halt(void);
 
 // Port I/O
-uint8_t isa_port_in(const uint16_t port);
-void isa_port_out(const uint16_t port, const uint8_t data);
+uint8_t isa_port_in8(const uint16_t port);
+void isa_port_out8(const uint16_t port, const uint8_t data);
 
 extern void interrupt_test(void);
 

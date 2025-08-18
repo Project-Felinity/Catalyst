@@ -7,10 +7,9 @@
 #include "isa/x86_64/lp_control/cpu.h"
 
 // out-of-module
-#include "lib/string/string.h"
-#include "lib/string/type_conv.h"
 #include "log/log.h"
-#include "panic/api.h"
+#include "log/printf.h"
+#include "panic/ifce.h"
 
 /*
 Raw Exception Handlers
@@ -38,12 +37,7 @@ void ih_invalid_opcode(void)
 void ih_general_protection_fault(const uint64_t int_err_code)
 {
     log_puts("A general protection fault has occurred\r\n");
-    log_puts("Error Code: ");
-    char temp_str[21];
-    utility_u64_to_dec_str(int_err_code, temp_str);
-    log_puts(temp_str);
-    log_puts("\r\n");
-
+    printf("Error Code: %d\r\n", int_err_code);
     panic();
     // TODO: Handle actual cases that can cause GP exceptions
 }
@@ -58,19 +52,11 @@ void ih_double_fault(const uint64_t int_err_code)
 void ih_page_fault(const uint64_t int_err_code)
 {
     log_puts("A page fault has occurred\r\n");
-    log_puts("Error Code: ");
-    char temp_str[21];
-    utility_memset(temp_str, 0, 21);
-    utility_u64_to_hex_str(int_err_code, temp_str);
-    log_puts(temp_str);
-    log_puts("\r\n");
+    printf("Error Code: %d\r\n", int_err_code);
     get_regs();
     log_puts("Registers:\r\n");
     for (size_t i = 0; i < 16; ++i) {
-        utility_memset(temp_str, 0, 21);
-        utility_u64_to_hex_str(g_cpu_regs[i], temp_str);
-        log_puts(temp_str);
-        log_puts("\r\n");
+        printf("%x", g_cpu_regs[i]);
     }
     panic();
 }

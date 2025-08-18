@@ -44,11 +44,10 @@ void create_system_segment_descriptor(uint64_t *dest_lower, const uint64_t base,
                                       const uint32_t limit, const uint8_t access_byte,
                                       const uint8_t flags)
 {
-    create_segment_descriptor(dest_lower, base & 0xFFFFFFFFu, limit, access_byte, flags);
+    uint64_t *dest_upper = nullptr;
 
-    uint64_t *dest_upper =
-        dest_lower +
-        1; // (adding a constant to a pointer adds the constant * sizeof the pointed to type)
+    create_segment_descriptor(dest_lower, base & 0xFFFFFFFFu, limit, access_byte, flags);
+    dest_upper = dest_lower + 1; // (adding a constant to a pointer adds the constant * sizeof the pointed to type)
     *dest_upper = ((base & 0xFFFFFFFF00000000) >> 32ul);
 }
 

@@ -65,12 +65,6 @@ get_regs:
         mov [rel g_cpu_regs + 8 * 14], r14
         mov [rel g_cpu_regs + 8 * 15], r15
         ret
-global get_int_error_code
-get_int_error_code:
-        pop r10
-        pop rax
-        push r10
-        ret
 
 global hcf
 hcf:
